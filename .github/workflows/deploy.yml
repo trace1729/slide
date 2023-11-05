@@ -19,7 +19,7 @@ jobs:
       with:
         source_file: 'slide/site/.'
         destination_repo: 'trace1729/slides'
-        destination_branch: 'master'
+        destination_branch: 'main'
         destination_folder: 'RevealmdTemplate'
         user_email: '1106029170@qq.com'
         user_name: 'trace1729'
