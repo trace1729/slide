@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="./static/css/base.css" rel="stylesheet">
+    <link href="./static/css/tailwind.min.css" rel="stylesheet">
+    <link href="https://fonts.font.im/css?family=Source+Serif+Pro%7CLato%7CInconsolata" rel="stylesheet"
+        type="text/css">
+    <title> nvim </title>
+    <!-- browser favicon -->
+    <link rel="shortcut icon" href="./static/img/favicon.png">
+    <style>
+        .font-sans {
+            font-family: 'Lato', 'SimHei', 'STHeiti', 'SimHei', 'Serif';
+        }
+
+        .font-serif {
+            font-family: 'Source Serif Pro', 'Songti SC', 'SimSun', 'Serif', serif;
+        }
+    </style>
+    <!-- <link rel="stylesheet" href="https://jyywiki.cn/static/katex/katex.min.css">
+    <script defer src="https://jyywiki.cn/static/katex/katex.min.js"></script> -->
+    <link rel="stylesheet" href="./static/katex/katex.min.css">
+    <script defer src="./static/katex/katex.min.js"></script>
+    <!-- <script defer src="https://jyywiki.cn/static/katex/auto-render.min.js"
+        integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05"
+        crossorigin="anonymous"></script> -->
+    <script defer src="./static/katex/auto-render.min.js"></script>
+    <script src="plugin/markdown/markdown.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            renderMathInElement(document.body, {
+                // customised options
+                // &#8226; auto-render specific keys, e.g.:
+                delimiters: [
+                    { left: '$$', right: '$$', display: true },
+                    { left: '$', right: '$', display: false },
+                    { left: '\\(', right: '\\)', display: false },
+                    { left: '\\[', right: '\\]', display: true }
+                ],
+                // &#8226; rendering keys, e.g.:
+                throwOnError: false
+            });
+        });
+    </script>
+
+    <link rel="stylesheet" href="./static/reveal/reveal.css">
+    <link rel="stylesheet" href="./static/reveal/theme/simple.css" id="theme">
+    <link rel="stylesheet" href="./static/jyy/jyy.css">
+
+</head>
+
+<body class="d-flex flex-column h-100">
+
+    <div class="reveal">
+        <div class="slides">
+            <section><section><div class="center middle"><div style="width:100%"><div><h1 id="neovim" class="text-2xl mt-2 font-sans">现代 Neovim 折腾指北</h1></div></div></div></section></section><section><section><div><h2 id="neovim" class="text-xl mt-2 pb-2 font-sans">什么是 Neovim</h2><div class="fragment" data-fragment-index="1"><blockquote>
+<p class="font-serif my-1">Neovim 是 Vim 的一个 <code>fork</code>, 在 Vim 支持多线程的补丁被拒绝后，Neovim 项目于 2014 年启动。</p>
+</blockquote></div><div class="fragment" data-fragment-index="2"><ul class="list-disc font-serif">
+<li class="ml-8">Neovim 全面兼容 Vim9.0 之前的配置, 只不过配置文件放置的位置不同<ul class="list-disc font-serif">
+<li class="ml-8">Neovim: <code>~/.config/nvim/init.[lua|vim]</code></li>
+<li class="ml-8">Vim:     <code>~/.vim/vimrc</code> 或者 <code>~/.vimrc</code> </li>
+</ul>
+</li>
+<li class="ml-8">Neovim 内置对 Lsp协议 (语法补全) 和 Treesitter(语法高亮) 的支持</li>
+<li class="ml-8">Neovim 可以使用 <code>lua</code> 脚本语言进行配置，而 Vim 只能使用 <code>vimL</code></li>
+</ul></div><div class="fragment" data-fragment-index="3"><hr/>
+<p class="font-serif my-1">ps: <em>在之后所提到的命令，如无特殊说明，Neovim 和 Vim 均适用</em></p></div></div></section></section><section><section><div class="center middle"><div style="width:100%"><div><h1 id="neovim" class="text-2xl mt-2 font-sans">Neovim 插件系统介绍</h1></div></div></div></section><section><div><h2 id="_1" class="text-xl mt-2 pb-2 font-sans">加载插件实际上在干什么？</h2><div class="fragment" data-fragment-index="1"><ul class="list-disc font-serif">
+<li class="ml-8">加载 Neovim 的 脚本文件<ul class="list-disc font-serif">
+<li class="ml-8"><code>set runtimepath</code> 会列出 Neovim 下查找脚本的路径</li>
+<li class="ml-8">在运行时，Neovim 自动加载这些路径下的 <code>.vim</code> <code>.nvim</code> <code>.lua</code> 文件</li>
+</ul>
+</li>
+</ul></div></div></section><section><div><h2 id="_1" class="text-xl mt-2 pb-2 font-sans">如何加载插件</h2><div class="fragment" data-fragment-index="1"><ul class="list-disc font-serif">
+<li class="ml-8">Vim8.0 之后提供原生的加载第三方插件的功能<ul class="list-disc font-serif">
+<li class="ml-8"><code>~/.vim/pack/[foobar]/start</code>: 自动加载</li>
+<li class="ml-8"><code>~/.vim/pack/[foobar]/opt</code>: 按需加载 </li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p class="font-serif my-1">需要手动 clone, upgrade 😜, 不方便</p>
+</blockquote></div><div class="fragment" data-fragment-index="2"><ul class="list-disc font-serif">
+<li class="ml-8">使用包管理器<ul class="list-disc font-serif">
+<li class="ml-8"><code>vim-plug</code> 适用于 Vim 和 Neovim</li>
+<li class="ml-8"><code>packer.nvim</code> 仅适用于 Neovim</li>
+<li class="ml-8"><code>lazy.nvim</code> 仅适用于 Neovim (Packer 作者亲情推荐)</li>
+</ul>
+</li>
+</ul>
+<hr/></div></div></section></section><section><section><div class="center middle"><div style="width:100%"><div><h1 id="_1" class="text-2xl mt-2 font-sans">代码补全</h1></div></div></div></section><section><div><h2 id="lsp" class="text-xl mt-2 pb-2 font-sans">代码补全基础: LSP 介绍</h2><div class="fragment" data-fragment-index="1"><blockquote>
+<p class="font-serif my-1">语言服务器协议（LSP）是一种基于 JSON-RPC 的开放协议，用于源代码编辑器或集成开发环境（IDE）与提供 "语言智能工具 "的服务器之间 编程语言特定功能，如代码自动补全、语法高亮、警告和错误标记以及重构例程。</p>
+</blockquote>
+<p class="font-serif my-1">LSP 最初是微软为Vscode开发的，现在已经成为开放标准</p>
+<ul class="list-disc font-serif">
+<li class="ml-8">在编辑器和编程语言之间加了一层抽象, 一个不恰当的比方<ul class="list-disc font-serif">
+<li class="ml-8">NEMU对应编辑器</li>
+<li class="ml-8">各种架构对应各种语言</li>
+<li class="ml-8">LSP对应AM</li>
+</ul>
+</li>
+<li class="ml-8">这样，编辑器只要支持 LSP 协议，那就可以复用各个语言的语言服务器来提供高级特性</li>
+</ul></div></div></section><section><div><h2 id="neovim" class="text-xl mt-2 pb-2 font-sans">Neovim 下进行代码补全</h2><div class="fragment" data-fragment-index="1"><p class="font-serif my-1">使用插件提供的 LSP 支持</p>
+<ul class="list-disc font-serif">
+<li class="ml-8"><a href="https://github.com/neoclide/coc.nvim">coc.nvim</a>(不支持 Metals): <ul class="list-disc font-serif">
+<li class="ml-8">基于NodeJS 的适用于Vim8, Neovim 的Vim 智能补全插件, 配置风格类似Vscode</li>
+<li class="ml-8">虽然coc 是 vim 的一个插件，但是他也有自己的插件系统</li>
+</ul>
+</li>
+</ul></div><div class="fragment" data-fragment-index="2"><p class="font-serif my-1">使用 Neovim 内置的 LSP </p>
+<ul class="list-disc font-serif">
+<li class="ml-8"><a href="https://github.com/neovim/nvim-lspconfig">nvim-lspconfig</a>, <a href="https://github.com/williamboman/mason.nvim">mason.nvim</a>, <a href="https://github.com/williamboman/mason-lspconfig.nvim">mason-lspconfig.nvim</a> (不支持 metals): <ul class="list-disc font-serif">
+<li class="ml-8"><code>nvim-lspconfig</code> 用于配置 Neovim LSP</li>
+<li class="ml-8"><code>mason</code> 用于快速下载 语言服务器</li>
+<li class="ml-8"><code>mason-lspconfig</code> 用于兼容 nvim-lspconfig 和 mason</li>
+</ul>
+</li>
+<li class="ml-8"><a href="https://github.com/scalameta/nvim-metals">nvim-metals</a>: (可以和上面的插件并存) 单独为 metals 提供服务</li>
+</ul></div></div></section></section><section><section><div class="center middle"><div style="width:100%"><div><h1 id="_1" class="text-2xl mt-2 font-sans"><a href="https://github.com/trace1729/nvim-lua/tree/lua-migration">配置分享</a></h1></div></div></div></section><section><div><h2 id="_1" class="text-xl mt-2 pb-2 font-sans">基本移动</h2>
+<p class="font-serif my-1">键位映射</p>
+<div class="codehilite"><pre class="bg-gray-100 overflow-x-auto rounded p-2 mb-2 mt-2"><span/><code><span class="w">     </span><span class="o">^</span><span class="w">              </span><span class="o">^</span>
+<span class="w">     </span><span class="n">k</span><span class="w">              </span><span class="n">i</span>
+<span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">h</span><span class="w">   </span><span class="n">l</span><span class="w"> </span><span class="o">&gt;</span><span class="w">  </span><span class="o">--&gt;</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">j</span><span class="w">   </span><span class="n">l</span><span class="w"> </span><span class="o">&gt;</span>
+<span class="w">     </span><span class="n">j</span><span class="w">              </span><span class="n">k</span>
+<span class="w">     </span><span class="n">v</span><span class="w">              </span><span class="n">v</span>
+</code></pre></div>
+
+<p class="font-serif my-1">配置代码</p>
+<div class="codehilite"><pre class="bg-gray-100 overflow-x-auto rounded p-2 mb-2 mt-2"><span/><code><span class="nb">noremap</span> <span class="p">&lt;</span><span class="k">silent</span><span class="p">&gt;</span> <span class="k">i</span> <span class="k">k</span>
+<span class="nb">noremap</span> <span class="p">&lt;</span><span class="k">silent</span><span class="p">&gt;</span> <span class="k">j</span> <span class="k">h</span>
+<span class="nb">noremap</span> <span class="p">&lt;</span><span class="k">silent</span><span class="p">&gt;</span> <span class="k">k</span> <span class="k">j</span>
+<span class="nb">noremap</span> <span class="p">&lt;</span><span class="k">silent</span><span class="p">&gt;</span> z <span class="k">i</span>
+</code></pre></div>
+
+<blockquote>
+<p class="font-serif my-1">这里提供 vimL 的配置方式，lua 的配置方法请看代码仓库/文档</p>
+</blockquote></div></section><section><div><h2 id="_1" class="text-xl mt-2 pb-2 font-sans">窗口管理</h2>
+<p class="font-serif my-1">键位映射</p>
+<ul class="list-disc font-serif">
+<li class="ml-8"><code>s</code> + <code>u/d/l/r</code>: 向上/下/左/右 分屏</li>
+<li class="ml-8"><code>&lt;Space&gt;</code> + 方向键: 切换光标所在屏幕</li>
+</ul>
+<p class="font-serif my-1">配置代码</p>
+<div class="codehilite"><pre class="bg-gray-100 overflow-x-auto rounded p-2 mb-2 mt-2"><span/><code>map <span class="nb">sr</span> :<span class="k">set</span> <span class="nb">splitright</span><span class="p">&lt;</span>CR<span class="p">&gt;</span>:<span class="k">vsplit</span><span class="p">&lt;</span>CR<span class="p">&gt;</span>
+map <span class="k">sl</span> :<span class="k">set</span> <span class="nb">nosplitright</span><span class="p">&lt;</span>CR<span class="p">&gt;</span>:<span class="k">vsplit</span><span class="p">&lt;</span>CR<span class="p">&gt;</span>
+map <span class="nb">su</span> :<span class="k">set</span> <span class="nb">nosplitbelow</span><span class="p">&lt;</span>CR<span class="p">&gt;</span>:split<span class="p">&lt;</span>CR<span class="p">&gt;</span>
+map sd :<span class="k">set</span> <span class="nb">splitbelow</span><span class="p">&lt;</span>CR<span class="p">&gt;</span>:split<span class="p">&lt;</span>CR<span class="p">&gt;</span>
+<span class="nb">noremap</span> <span class="p">&lt;</span>SPACE<span class="p">&gt;&lt;</span><span class="k">up</span><span class="p">&gt;</span>   <span class="p">&lt;</span>C<span class="p">-</span><span class="k">w</span><span class="p">&gt;</span><span class="k">k</span>
+<span class="nb">noremap</span> <span class="p">&lt;</span>SPACE<span class="p">&gt;&lt;</span><span class="k">left</span><span class="p">&gt;</span>  <span class="p">&lt;</span>C<span class="p">-</span><span class="k">w</span><span class="p">&gt;</span><span class="k">h</span>
+<span class="nb">noremap</span> <span class="p">&lt;</span>SPACE<span class="p">&gt;&lt;</span>down<span class="p">&gt;</span>  <span class="p">&lt;</span>C<span class="p">-</span><span class="k">w</span><span class="p">&gt;</span><span class="k">j</span>
+<span class="nb">noremap</span> <span class="p">&lt;</span>SPACE<span class="p">&gt;&lt;</span><span class="k">right</span><span class="p">&gt;</span> <span class="p">&lt;</span>C<span class="p">-</span><span class="k">w</span><span class="p">&gt;</span><span class="k">l</span>
+</code></pre></div></div></section><section><div><h2 id="tab" class="text-xl mt-2 pb-2 font-sans">Tab 管理</h2>
+<p class="font-serif my-1">键位映射</p>
+<ul class="list-disc font-serif">
+<li class="ml-8"><code>&lt;space&gt; + n</code> 新建一个tab</li>
+<li class="ml-8"><code>th</code> 访问右侧的 tab</li>
+<li class="ml-8"><code>tl</code> 访问左侧的 tab</li>
+</ul>
+<p class="font-serif my-1">配置代码</p>
+<div class="codehilite"><pre class="bg-gray-100 overflow-x-auto rounded p-2 mb-2 mt-2"><span/><code>map <span class="p">&lt;</span>leader<span class="p">&gt;</span><span class="k">n</span> :<span class="k">tabnew</span><span class="p">&lt;</span>CR<span class="p">&gt;</span>
+map <span class="k">tl</span> :tabnext<span class="p">&lt;</span>CR<span class="p">&gt;</span>
+map <span class="k">th</span> :<span class="k">tabprevious</span><span class="p">&lt;</span>CR<span class="p">&gt;</span>
+</code></pre></div></div></section><section><div><h2 id="_1" class="text-xl mt-2 pb-2 font-sans">查找</h2>
+<p class="font-serif my-1">Telescope: 快速查找</p>
+<ul class="list-disc font-serif">
+<li class="ml-8"><code>C-p</code> 查找文件</li>
+<li class="ml-8"><code>C-f</code> 查找文件内容</li>
+<li class="ml-8"><code>C-h</code> 查找历史文件</li>
+<li class="ml-8"><code>C-l</code> 查找内置命令</li>
+</ul></div></section><section><div><h2 id="lsp" class="text-xl mt-2 pb-2 font-sans">LSP</h2>
+<ul class="list-disc font-serif">
+<li class="ml-8"><code>gd</code> 跳转到定义</li>
+<li class="ml-8"><code>&lt;leader&gt;-</code> 跳转到上一个诊断</li>
+<li class="ml-8"><code>&lt;leader&gt;+</code> 跳转到下一个诊断</li>
+<li class="ml-8"><code>&lt;leader&gt;h</code> 查看文档</li>
+<li class="ml-8"><code>&lt;leader&gt;rn</code> 重命名</li>
+</ul></div></section><section><div><h2 id="metals" class="text-xl mt-2 pb-2 font-sans">Metals 配置</h2></div></section></section><section><section><div class="center middle"><div style="width:100%"><div><h1 id="config-from-scratch" class="text-2xl mt-2 font-sans">想要 config from scratch?</h1></div></div></div></section><section><div><h2 id="neovim" class="text-xl mt-2 pb-2 font-sans">开箱即用的 Neovim 配置框架</h2>
+<ul class="list-disc font-serif">
+<li class="ml-8"><code>Lazyvim</code><ul class="list-disc font-serif">
+<li class="ml-8">没错，就是<code>Lazy.nvim</code>包管理器的作者维护的</li>
+</ul>
+</li>
+<li class="ml-8"><code>AstroNvim</code><ul class="list-disc font-serif">
+<li class="ml-8">社区相当活跃</li>
+</ul>
+</li>
+</ul></div></section><section><div><h2 id="chisel" class="text-xl mt-2 pb-2 font-sans">就想写个 chisel, 别整这么多有的没得</h2>
+<p class="font-serif my-1">支持 <code>nvim-metals</code> 插件的 minimum-configruation</p>
+<ul class="list-disc font-serif">
+<li class="ml-8">仅包含 lsp, 语法高亮, 和一个文件树插件<ul class="list-disc font-serif">
+<li class="ml-8"><a href="https://github.com/trace1729/nvim-lua/tree/main">minimum-configruation</a></li>
+</ul>
+</li>
+</ul>
+<div class="codehilite"><pre class="bg-gray-100 overflow-x-auto rounded p-2 mb-2 mt-2"><span/><code><span class="n">plugin/</span>
+<span class="n">    catppuccin.lua --&gt; 主题</span>
+<span class="n">    completion.lua</span>
+<span class="n">    lsp-config.lua</span>
+<span class="n">    none-ls.lua</span>
+<span class="n">    metals.lua    ---&gt; lsp</span>
+<span class="n">    neotree.lua   ---&gt; 文件树</span>
+<span class="n">    telescope.lua ---&gt; 查找</span>
+<span class="n">    treesitter.lua ---&gt; 语法高亮</span>
+</code></pre></div></div></section></section><section><section><div><h2 id="_1" class="text-xl mt-2 pb-2 font-sans">彩蛋</h2>
+<p class="font-serif my-1">小 tips</p>
+<ul class="list-disc font-serif">
+<li class="ml-8"><code>%</code> 可以跳转到另一个配对括号</li>
+<li class="ml-8"><code>:term</code> 可以在 Neovim 下打开终端</li>
+<li class="ml-8">在 insert 模式下按 <code>C-w</code> 可以向前删除一个 word</li>
+<li class="ml-8"><code>:echo expand('%:p')</code> 可以打印当前文件的绝对文件路径</li>
+</ul></div></section></section>
+        </div>
+    </div>
+
+    <script src="./static/reveal/reveal.js"></script>
+
+    <script>
+        Reveal.initialize({
+
+            width: 1024, height: 768,
+
+            slideNumber: 'c/t',
+            controlsTutorial: false,
+            progress: false,
+            hash: true,
+            center: false,
+            autoAnimateUnmatched: true,
+            autoAnimateEasing: 'ease-out',
+            autoAnimateDuration: 0.3,
+            transitionSpeed: 'fast'
+        });
+    </script>
+</body>
+
+</html>
