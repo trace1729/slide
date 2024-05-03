@@ -75,7 +75,8 @@
 <li class="ml-8">在运行时，Neovim 自动加载这些路径下的 <code>.vim</code> <code>.nvim</code> <code>.lua</code> 文件</li>
 </ul>
 </li>
-</ul></div></div></section><section><div><h2 id="_1" class="text-xl mt-2 pb-2 font-sans">如何加载插件</h2><div class="fragment" data-fragment-index="1"><ul class="list-disc font-serif">
+</ul>
+<p class="font-serif my-1"><img src="./static/img/d13e2e1e0b1443d7afc1c9352c34d370.png"/></p></div></div></section><section><div><h2 id="_1" class="text-xl mt-2 pb-2 font-sans">如何加载插件</h2><div class="fragment" data-fragment-index="1"><ul class="list-disc font-serif">
 <li class="ml-8">Vim8.0 之后提供原生的加载第三方插件的功能<ul class="list-disc font-serif">
 <li class="ml-8"><code>~/.vim/pack/[foobar]/start</code>: 自动加载</li>
 <li class="ml-8"><code>~/.vim/pack/[foobar]/opt</code>: 按需加载 </li>
@@ -92,9 +93,9 @@
 </ul>
 </li>
 </ul>
-<hr/></div></div></section></section><section><section><div class="center middle"><div style="width:100%"><div><h1 id="_1" class="text-2xl mt-2 font-sans">代码补全</h1></div></div></div></section><section><div><h2 id="lsp" class="text-xl mt-2 pb-2 font-sans">代码补全基础: LSP 介绍</h2><div class="fragment" data-fragment-index="1"><blockquote>
-<p class="font-serif my-1">语言服务器协议（LSP）是一种基于 JSON-RPC 的开放协议，用于源代码编辑器或集成开发环境（IDE）与提供 "语言智能工具 "的服务器之间 编程语言特定功能，如代码自动补全、语法高亮、警告和错误标记以及重构例程。</p>
-</blockquote>
+<hr/></div></div></section></section><section><section><div class="center middle"><div style="width:100%"><div><h1 id="_1" class="text-2xl mt-2 font-sans">代码补全</h1></div></div></div></section><section><div><h2 id="lsp" class="text-xl mt-2 pb-2 font-sans">代码补全基础: LSP 介绍</h2><div class="fragment" data-fragment-index="1"><div class="codehilite"><pre class="bg-gray-100 overflow-x-auto rounded p-2 mb-2 mt-2"><span/><code>语言服务器协议（LSP）是一种基于 JSON-RPC 的开放协议，用于源代码编辑器或集成开发环境（IDE）与提供 "语言智能工具 "的服务器之间 编程语言特定功能，如代码自动补全、语法高亮、警告和错误标记以及重构例程。
+</code></pre></div>
+
 <p class="font-serif my-1">LSP 最初是微软为Vscode开发的，现在已经成为开放标准</p>
 <ul class="list-disc font-serif">
 <li class="ml-8">在编辑器和编程语言之间加了一层抽象, 一个不恰当的比方<ul class="list-disc font-serif">
@@ -104,7 +105,8 @@
 </ul>
 </li>
 <li class="ml-8">这样，编辑器只要支持 LSP 协议，那就可以复用各个语言的语言服务器来提供高级特性</li>
-</ul></div></div></section><section><div><h2 id="neovim" class="text-xl mt-2 pb-2 font-sans">Neovim 下进行代码补全</h2><div class="fragment" data-fragment-index="1"><p class="font-serif my-1">使用插件提供的 LSP 支持</p>
+</ul>
+<p class="font-serif my-1"><img class="float-right" width="400" height="400" src="./static/img/1c782446444c4596ad6469f2c09c5241.png"/></p></div></div></section><section><div><h2 id="neovim" class="text-xl mt-2 pb-2 font-sans">Neovim 下进行代码补全</h2><div class="fragment" data-fragment-index="1"><p class="font-serif my-1">使用插件提供的 LSP 支持</p>
 <ul class="list-disc font-serif">
 <li class="ml-8"><a href="https://github.com/neoclide/coc.nvim">coc.nvim</a>(不支持 Metals): <ul class="list-disc font-serif">
 <li class="ml-8">基于NodeJS 的适用于Vim8, Neovim 的Vim 智能补全插件, 配置风格类似Vscode</li>
